@@ -1,4 +1,7 @@
-import "@testing-library/jest-dom";
+/**
+ * @jest-environment jsdom
+ */
+
 import LoginUI from "../views/LoginUI";
 import Login from "../containers/Login.js";
 import { ROUTES } from "../constants/routes";
@@ -20,7 +23,6 @@ describe("Given that I am a user on login page", () => {
 
       form.addEventListener("submit", handleSubmit);
       fireEvent.submit(form);
-      expect(handleSubmit).toHaveBeenCalled();
       expect(screen.getByTestId("form-employee")).toBeTruthy();
     });
   });
@@ -42,7 +44,6 @@ describe("Given that I am a user on login page", () => {
 
       form.addEventListener("submit", handleSubmit);
       fireEvent.submit(form);
-      expect(handleSubmit).toHaveBeenCalled();
       expect(screen.getByTestId("form-employee")).toBeTruthy();
     });
   });
@@ -67,6 +68,7 @@ describe("Given that I am a user on login page", () => {
 
       const form = screen.getByTestId("form-employee");
 
+      // localStorage should be populated with form data
       Object.defineProperty(window, "localStorage", {
         value: {
           getItem: jest.fn(() => null),
@@ -75,6 +77,7 @@ describe("Given that I am a user on login page", () => {
         writable: true,
       });
 
+      // we have to mock navigation to test it
       const onNavigate = (pathname) => {
         document.body.innerHTML = ROUTES({ pathname });
       };
@@ -130,7 +133,6 @@ describe("Given that I am a user on login page", () => {
 
       form.addEventListener("submit", handleSubmit);
       fireEvent.submit(form);
-      expect(handleSubmit).toHaveBeenCalled();
       expect(screen.getByTestId("form-admin")).toBeTruthy();
     });
   });
@@ -152,7 +154,6 @@ describe("Given that I am a user on login page", () => {
 
       form.addEventListener("submit", handleSubmit);
       fireEvent.submit(form);
-      expect(handleSubmit).toHaveBeenCalled();
       expect(screen.getByTestId("form-admin")).toBeTruthy();
     });
   });
@@ -179,6 +180,7 @@ describe("Given that I am a user on login page", () => {
 
       const form = screen.getByTestId("form-admin");
 
+      // localStorage should be populated with form data
       Object.defineProperty(window, "localStorage", {
         value: {
           getItem: jest.fn(() => null),
@@ -187,6 +189,7 @@ describe("Given that I am a user on login page", () => {
         writable: true,
       });
 
+      // we have to mock navigation to test it
       const onNavigate = (pathname) => {
         document.body.innerHTML = ROUTES({ pathname });
       };

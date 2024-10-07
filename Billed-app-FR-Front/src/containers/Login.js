@@ -18,16 +18,11 @@ export default class Login {
     const formEmployee = this.document.querySelector(
       `form[data-testid="form-employee"]`
     );
-    if (formEmployee) {
-      formEmployee.addEventListener("submit", this.handleSubmitEmployee);
-    }
-
+    formEmployee.addEventListener("submit", this.handleSubmitEmployee);
     const formAdmin = this.document.querySelector(
       `form[data-testid="form-admin"]`
     );
-    if (formAdmin) {
-      formAdmin.addEventListener("submit", this.handleSubmitAdmin);
-    }
+    formAdmin.addEventListener("submit", this.handleSubmitAdmin);
   }
 
   handleSubmitEmployee = (e) => {
@@ -69,6 +64,7 @@ export default class Login {
       .then(() => {
         this.onNavigate(ROUTES_PATH["Dashboard"]);
         this.PREVIOUS_LOCATION = ROUTES_PATH["Dashboard"];
+        PREVIOUS_LOCATION = this.PREVIOUS_LOCATION;
         document.body.style.backgroundColor = "#fff";
       });
   };
@@ -85,8 +81,9 @@ export default class Login {
         .then(({ jwt }) => {
           this.localStorage.setItem("jwt", jwt);
         });
+    } else {
+      return null;
     }
-    return null;
   };
 
   createUser = (user) => {
@@ -101,8 +98,12 @@ export default class Login {
             password: user.password,
           }),
         })
-        .then(() => this.login(user));
+        .then(() => {
+          console.log(`User with ${user.email} is created`);
+          return this.login(user);
+        });
+    } else {
+      return null;
     }
-    return null;
   };
 }
