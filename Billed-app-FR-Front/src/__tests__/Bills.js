@@ -58,7 +58,7 @@ describe("Given I am connected as an employee", () => {
         )
         .map((a) => a.innerHTML);
 
-      const chrono = (a, b) => (a < b ? -1 : 1);
+      const chrono = (a, b) => (a.date < b.date ? -1 : 1);
       const datesSorted = [...dates].sort(chrono);
       expect(dates).toEqual(datesSorted);
     });

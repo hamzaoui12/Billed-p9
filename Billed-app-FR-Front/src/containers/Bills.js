@@ -43,8 +43,11 @@ export default class {
         .then((snapshot) => {
           const bills = snapshot.map((doc) => {
             try {
+              const originalDate = new Date(doc.date);
+
               return {
                 ...doc,
+                originalDate,
                 date: formatDate(doc.date),
                 status: formatStatus(doc.status),
               };
@@ -57,7 +60,6 @@ export default class {
               };
             }
           });
-          console.log("length", bills.length);
           return bills;
         });
     }

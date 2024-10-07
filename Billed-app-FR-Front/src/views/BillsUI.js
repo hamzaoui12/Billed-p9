@@ -3,14 +3,6 @@ import ErrorPage from "./ErrorPage.js";
 import LoadingPage from "./LoadingPage.js";
 import Actions from "./Actions.js";
 
-const sortBills = (bills) => {
-  return bills
-    ? bills.sort((a, b) => {
-        return new Date(a.date) - new Date(b.date);
-      })
-    : [];
-};
-
 const row = (bill) => {
   return `
     <tr>
@@ -26,6 +18,13 @@ const row = (bill) => {
     `;
 };
 
+const sortBills = (bills) => {
+  return bills
+    ? bills.sort((a, b) => {
+        return b.originalDate - a.originalDate;
+      })
+    : [];
+};
 const rows = (data) => {
   const sortedBills = sortBills(data);
   return sortedBills.map((bill) => row(bill)).join("");
